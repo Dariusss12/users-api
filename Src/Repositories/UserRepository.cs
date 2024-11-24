@@ -14,26 +14,23 @@ namespace users_api.Src.Repositories
     {
         private readonly DataContext _context = context;
 
-        public async Task<User> GetUser(Guid id)
+        public async Task<User?> GetUser(Guid id)
         {
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<User>> GetUsers(int pageNumber, int pageSize)
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
 
         public async Task<User> CreateUser(CreateUserDto createUserDto)
         {
-            var existingUser = await GetUserByEmail(createUserDto.Email);
-            if(existingUser != null){
-                return null;
-            }
-
             var user = new User
             {
-               Id = Guid.NewGuid(),
                Name = createUserDto.Name,
                LastName = createUserDto.LastName,
                Email = createUserDto.Email,

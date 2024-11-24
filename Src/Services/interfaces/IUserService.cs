@@ -8,9 +8,9 @@ namespace users_api.Src.Services.interfaces
 {
     public interface IUserService
     {
-        Task<IEnumerable<UserDto>> GetUsers();
+        Task<IEnumerable<UserDto>> GetUsers(int pageNumber, int pageSize);
 
-        Task<UserDto> GetUser(Guid id);
+        Task<UserDto?> GetUser(Guid id);
 
         Task<UserDto> CreateUser(CreateUserDto createUser);
 

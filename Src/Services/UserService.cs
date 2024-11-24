@@ -7,7 +7,7 @@ namespace users_api.Src.Services
     public class UserService(IUserRepository userRepository) : IUserService
     {
         private readonly IUserRepository _userRepository = userRepository;
-        public async Task<UserDto> GetUser(Guid id)
+        public async Task<UserDto?> GetUser(Guid id)
         {
             var existingUser = await _userRepository.GetUser(id);
             if(existingUser == null){
@@ -23,9 +23,9 @@ namespace users_api.Src.Services
             };
         }
 
-        public async Task<IEnumerable<UserDto>> GetUsers()
+        public async Task<IEnumerable<UserDto>> GetUsers(int pageNumber, int pageSize)
         {
-            var users = await _userRepository.GetUsers();
+            var users = await _userRepository.GetUsers(pageNumber, pageSize);
             return users.Select(user => new UserDto
             {
                 Id = user.Id,

@@ -12,37 +12,29 @@ namespace users_api.Src.Controllers
     {
         private readonly IUserService _userService = userService;
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(Guid id)
         {
-            try {
-                var user = await _userService.GetUser(id);
-                return user != null ? Ok(user) : NotFound();
-            }
-            catch (Exception e) {
-                return StatusCode (500, e.Message);
-            }
+            var user = await _userService.GetUser(id);
+            return user != null ? Ok(user) : NotFound();
         }
-        [HttpGet("/")]
-        public async Task<IActionResult> GetUsers()
+
+        [HttpGet()]
+        public async Task<IActionResult> GetUsers([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            try {
-                var users = await _userService.GetUsers();
-                return Ok(users);
-            }
-            catch (Exception e) {
-                return StatusCode (500, e.Message);
-            }
+            var users = await _userService.GetUsers(pageNumber, pageSize);
+            return Ok(users);
         }
-        [HttpPost("/create")]
+
+        [HttpPost()]
         public async Task<IActionResult> CreateUser(CreateUserDto createUser)
         {
             try {
                 var user = await _userService.CreateUser(createUser);
-                return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user) : BadRequest();
+                return Created($"/api/users/{user.Id}", user);
             }
             catch (Exception e) {
-                return StatusCode(500, e.Message);
+                return BadRequest(e.Message);
             }
         }
 

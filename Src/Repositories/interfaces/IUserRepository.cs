@@ -9,8 +9,8 @@ namespace users_api.Src.Repositories.interfaces
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> GetUsers();
-        Task<User> GetUser(Guid id);
+        Task<IEnumerable<User>> GetUsers(int pageNumber, int pageSize);
+        Task<User?> GetUser(Guid id);
         Task<User> CreateUser(CreateUserDto createUserDto);
         Task<bool> UpdateUser(Guid id, EditUserDto editUser);
         Task<bool> DeleteUser(Guid id);
