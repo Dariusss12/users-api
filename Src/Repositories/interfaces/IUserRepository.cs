@@ -14,5 +14,6 @@ namespace users_api.Src.Repositories.interfaces
         Task<User> CreateUser(User user);
         Task<bool> UpdateUser(Guid id, EditUserDto editUser);
         Task<bool> DeleteUser(Guid id);
+        Task<User?> GetUserByEmail(string email);
     }
 }

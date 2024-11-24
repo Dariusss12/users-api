@@ -1,13 +1,28 @@
 using Microsoft.EntityFrameworkCore;
 using users_api.Src.Data;
+using users_api.Src.Repositories;
+using users_api.Src.Repositories.interfaces;
+using users_api.Src.Services;
+using users_api.Src.Services.interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlite("Data Source=EVSUM4.db"));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost",
+        builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 
 var app = builder.Build();
 
@@ -19,7 +34,11 @@ using (var scope = app.Services.CreateScope())
     DataSeeder.Initialize(services);
 }
 
+app.UseCors("AllowLocalhost");
+
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.Run();
 
