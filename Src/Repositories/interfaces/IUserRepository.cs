@@ -11,7 +11,7 @@ namespace users_api.Src.Repositories.interfaces
     {
         Task<IEnumerable<User>> GetUsers();
         Task<User> GetUser(Guid id);
-        Task<User> CreateUser(User user);
+        Task<User> CreateUser(CreateUserDto createUserDto);
         Task<bool> UpdateUser(Guid id, EditUserDto editUser);
         Task<bool> DeleteUser(Guid id);
         Task<User?> GetUserByEmail(string email);

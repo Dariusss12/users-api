@@ -12,7 +12,7 @@ namespace users_api.Src.Services.interfaces
 
         Task<UserDto> GetUser(Guid id);
 
-        Task<UserDto> CreateUser(UserDto user);
+        Task<UserDto> CreateUser(CreateUserDto createUser);
 
         Task<bool> UpdateUser(Guid id, EditUserDto editUser);
 

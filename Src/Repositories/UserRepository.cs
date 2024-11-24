@@ -14,19 +14,35 @@ namespace users_api.Src.Repositories
     {
         private readonly DataContext _context = context;
 
-        public Task<User> GetUser(Guid id)
+        public async Task<User> GetUser(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Users.FindAsync(id);
         }
 
-        public Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<User>> GetUsers()
         {
-            throw new NotImplementedException();
+            return await _context.Users.ToListAsync();
         }
 
-        public Task<User> CreateUser(User user)
+        public async Task<User> CreateUser(CreateUserDto createUserDto)
         {
-            throw new NotImplementedException();
+            var existingUser = await GetUserByEmail(createUserDto.Email);
+            if(existingUser != null){
+                return null;
+            }
+
+            var user = new User
+            {
+               Id = Guid.NewGuid(),
+               Name = createUserDto.Name,
+               LastName = createUserDto.LastName,
+               Email = createUserDto.Email,
+               Password = BCrypt.Net.BCrypt.HashPassword(createUserDto.Password),
+               IsActive = true,
+            };
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return user;
         }
 
         public async Task<bool> UpdateUser(Guid id, EditUserDto editUser)
