@@ -23,7 +23,7 @@ namespace users_api.Src.Services
 
         public async Task<bool> UpdateUser(Guid id, EditUserDto editUser)
         {
-            if(editUser.Email != null || editUser.Email != "")
+            if(editUser.Email != null)
             {
                 var existingUser = await _userRepository.GetUserByEmail(editUser.Email);
                 if(existingUser != null)
