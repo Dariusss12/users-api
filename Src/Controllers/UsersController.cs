@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using users_api.Src.DTO;
 using users_api.Src.Services.interfaces;
@@ -6,6 +7,7 @@ namespace users_api.Src.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class UsersController(IUserService userService) : Controller
     {
         private readonly IUserService _userService = userService;
