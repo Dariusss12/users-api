@@ -20,7 +20,5 @@ namespace users_api.Src.DTO
         [MinLength(3, ErrorMessage = "El nombre del usuario debe tener al menos 3 caracteres")]
         [MaxLength(30, ErrorMessage = "El contraseña del usuario no puede tener más de 30 caracteres")]
         public string? Password { get; set; } = null;
-
-        public bool? IsActive { get; set; } = null;
     }
 }

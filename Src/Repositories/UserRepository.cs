@@ -53,8 +53,6 @@ namespace users_api.Src.Repositories
             existingUser.LastName = editUser.LastName ?? existingUser.LastName;
             existingUser.Email = editUser.Email ?? existingUser.Email;
             existingUser.Password = editUser.Password ?? existingUser.Password;
-            existingUser.IsActive = editUser.IsActive ?? existingUser.IsActive;
-
 
             _context.Entry(existingUser).State = EntityState.Modified;
             await _context.SaveChangesAsync();
