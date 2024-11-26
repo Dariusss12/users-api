@@ -14,7 +14,7 @@ Env.Load();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlite("Data Source=EVSUM4.db"));
+builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlite("Data Source=/app/data/EVSUM4.db"));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
